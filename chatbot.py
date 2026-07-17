@@ -24,6 +24,7 @@ from support_tickets import SupportManager
 from proposals import ProposalManager
 from hr_manager import HRManager
 from reports import ReportManager
+from web_search import WebSearch
 
 
 class ChatBot:
@@ -54,6 +55,7 @@ class ChatBot:
         self.proposals = ProposalManager()
         self.hr = HRManager()
         self.reports = ReportManager()
+        self.web_search = WebSearch()
         self.conversation_history = []
         self.context = {}
         self.current_user = "user"
@@ -168,6 +170,11 @@ class ChatBot:
 
         if self.reports.is_report_request(user_input):
             response = self.reports.handle(user_input)
+            self._save_response(response)
+            return response
+
+        if self.web_search.is_search_request(user_input):
+            response = self.web_search.handle(user_input)
             self._save_response(response)
             return response
 
@@ -355,6 +362,13 @@ class ChatBot:
 ║  • "Revenue report" / "Client summary"                     ║
 ║  • "Employee report" / "Support report"                    ║
 ║  • "Monthly report" / "Dashboard"                          ║
+║                                                             ║
+║  🔍 WEB SEARCH:                                             ║
+║  • "Search for Python tutorials"                           ║
+║  • "What is machine learning?"                             ║
+║  • "How to cook pasta?"                                    ║
+║  • "Latest news about AI"                                  ║
+║  • "Weather in New York"                                   ║
 ║                                                             ║
 ║  🎯 QUICK COMMANDS:                                         ║
 ║  • agents, plugins, reasoning, voice, status               ║
