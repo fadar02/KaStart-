@@ -148,6 +148,11 @@ class ChatBot:
             self._save_response(response)
             return response
 
+        if self.web_search.is_search_request(user_input):
+            response = self.web_search.handle(user_input)
+            self._save_response(response)
+            return response
+
         if self.invoices.is_invoice_request(user_input):
             response = self.invoices.handle(user_input)
             self._save_response(response)
@@ -170,11 +175,6 @@ class ChatBot:
 
         if self.reports.is_report_request(user_input):
             response = self.reports.handle(user_input)
-            self._save_response(response)
-            return response
-
-        if self.web_search.is_search_request(user_input):
-            response = self.web_search.handle(user_input)
             self._save_response(response)
             return response
 

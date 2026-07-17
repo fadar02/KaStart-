@@ -194,17 +194,17 @@ class KnowledgeBase:
             r"\blist\s+(doc|file|note|document)",
             r"\b(documents?|notes?|files?)\s+(in|from)\s+(kb|knowledge|base)\b",
             r"\b(add|create)\s+(a\s+)?(document|note|entry|doc)\b",
-            r"\btell me about\b",
-            r"\bsearch.*for\b",
             r"\bwhat is\b.*\bin the\b.*\b(knowledge|kb|base|docs)\b",
             r"\bknowledge\b",
+            r"\bsearch\s+knowledge\b",
+            r"\blist\s+knowledge\b",
         ]
         return any(re.search(p, text_lower) for p in patterns)
 
     def handle(self, text):
         text_lower = text.lower().strip()
 
-        if any(w in text_lower for w in ["list documents", "list docs", "show documents", "show docs", "what do you know"]):
+        if any(w in text_lower for w in ["list documents", "list docs", "show documents", "show docs", "what do you know", "list knowledge", "show knowledge"]):
             return self.list_documents()
 
         add_match = re.search(
